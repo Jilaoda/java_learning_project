@@ -1,0 +1,59 @@
+# springboot官方推荐使用application.yml配置文件，yml文件的好处，天然的树状结构，一目了然。
+
+# 配置端口为8081,访问地址为http://localhost:8081/blog
+server:
+  port: 8081
+  servlet:
+    context-path: /blog
+
+# 配置mybatis,在src\main\resources\mybatis\mybatis-config.xml
+mybatis:
+  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations: classpath:mybatis/mapper/*.xml
+
+# 指定了应用程序的名称为blog
+spring:
+  application:
+    name: blog
+  # 同时配置了MySQL数据库的连接信息，包括数据库的URL、用户名、密码和驱动程序的类名
+  datasource:
+    url: jdbc:mysql://localhost:3306/personal_blog?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=GMT%2B8
+    username: root
+    password: liang521..
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    timeout: 300
+    password:
+  data:
+    redis:
+      repositories:
+        enabled: false
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+
+upload:
+  local:
+    path: /blog/uploadFile/
+    url: http://localhost:8081/blog
+
+# 添加分页插件的配置
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+
+send:
+  mail:
+    host: smtp.qq.com # 邮件服务器的SMTP地址
+    port: 587 # 邮件服务器的SMTP端口
+    from: 2529018799@qq.com # 发件人
+    pass: dkpzjbgufatcecai # 密码

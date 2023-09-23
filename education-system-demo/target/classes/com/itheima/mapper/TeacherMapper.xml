@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.itheima.mapper.TeacherMapper">
+
+    <resultMap id="brandResultMap" type="com.itheima.pojo.Teacher">
+        <result property="sno" column="sno"/>
+        <result property="sname" column="sName" />
+        <result property="sage" column="sAge" />
+        <result property="ssex" column="sSex" />
+        <result property="snationality" column="sNationality" />
+        <result property="sdept" column="sDept" />
+        <result property="sprofession" column="sProfession" />
+        <result property="entry_time" column="entryTime" javaType="java.util.Date" jdbcType="TIMESTAMP"  />
+    </resultMap>
+
+    <select id="selectByTnoPassword" resultType="com.itheima.pojo.Teacher">
+        select tno,tname,tage,tsex,tnationality,entry_time from teacher
+        where tno = #{tno} and password = #{passWord};
+    </select>
+
+    <select id="selectedCourse" resultType="com.itheima.pojo.Course">
+        select cno,cname,cstudents,ccredit from course where ctno = #{tno};
+    </select>
+
+
+
+</mapper>

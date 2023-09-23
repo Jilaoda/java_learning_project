@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.itheima.mapper.StudentMapper">
+
+    <resultMap id="brandResultMap" type="com.itheima.pojo.Student">
+        <result property="sno" column="sno"/>
+        <result property="sname" column="sName" />
+        <result property="sage" column="sAge" />
+        <result property="ssex" column="sSex" />
+        <result property="snationality" column="sNationality" />
+        <result property="sdept" column="sDept" />
+        <result property="sprofession" column="sProfession" />
+        <result property="password" column="passWord" />
+        <result property="entrance_time" column="entranceTime" javaType="java.util.Date" jdbcType="TIMESTAMP"  />
+    </resultMap>
+
+    <insert id="updateCourseBySnoCno">
+        insert into sc(cno,sno,tno,grade,sc_update) values(#{cno},#{sno},#{tno},0,now());
+    </insert>
+    <delete id="deleteCourseBySnoCno">
+        delete from sc where cno = #{cno} and sno = #{sno} and tno = #{tno};
+    </delete>
+
+
+    <select id="selectBySnoPassword" resultType="com.itheima.pojo.Student">
+        select sno,sname,sage,ssex,snationality,sdept,sprofession,entrance_time from student
+        where sno = #{sno} and password = #{passWord};
+    </select>
+
+    <select id="selectCourseBySno" resultType="com.itheima.pojo.Course">
+        select cno,cname,ctno,cstudents,ccredit from course
+        where cno not in (
+            select cno from sc where sno = #{sno}
+        );
+    </select>
+
+    <select id="selectedCourse" resultType="com.itheima.pojo.Course">
+        select cno,cname,ctno,cstudents,ccredit from course
+        where cno in (
+            select cno from sc where sno = #{sno}
+        );
+    </select>
+    <select id="programSelect" resultType="com.itheima.pojo.SelectCourse">
+        select cno,grade from sc where sno = #{sno}
+    </select>
+
+
+</mapper>
